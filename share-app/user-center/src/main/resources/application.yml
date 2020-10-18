@@ -1,0 +1,42 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: user-center
+  zipkin:
+    base-url: http://localhost:9411/
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      # 抽样率，默认是0.1（10%）
+      probability: 1.0
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  #        metadata:
+  #          instance: aa
+  #          namespace: 4eef7a74-a5bd-4ee2-b770-90b209d5417f
+
+
+  datasource:
+    url: jdbc:mysql://rm-bp13q0jl95pd4zo279o.mysql.rds.aliyuncs.com:3306/user-center?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+    hikari:
+      username: wzw
+      password: cM8E!c_89iz2LKV
+      driver-class-name: com.mysql.cj.jdbc.Driver
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+rocketmq:
+  name-server: 47.115.60.46:9876
+jwt:
+  secret: aaaaaaabbbbbbcccccdddddaaaaaaabbbbbbcccccdddddaaaaaaabbbbbbcccccddddd
+  #有效期，单位秒，默认2周
+  expinetime.in-sacond: 1209600

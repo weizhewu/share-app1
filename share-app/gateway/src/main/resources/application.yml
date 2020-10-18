@@ -1,0 +1,59 @@
+server:
+  port: 8048
+#service-url:
+#  user-service: http:localhost:8081
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            allowedMethods:
+              - GET
+              - POST
+              - OPTIONS
+              - DELETE
+              - PUT
+              - HEAD
+              - PATCH
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: path_route1
+          uri: lb://user-center
+          predicates:
+            - Path=/users/**
+        - id: path_route2
+          uri: lb://content-center
+          predicates:
+            - Path=/users/**
+        - id: path_route3
+          uri: lb://content-center
+          predicates:
+            - Path=/notices/**
+        - id: path_route4
+          uri: lb://content-center
+          predicates:
+            - Path=/shares/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
